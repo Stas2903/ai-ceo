@@ -1,0 +1,44 @@
+# SYNTHETIC - hand-written owner requests for a fictional pottery studio.
+# Used only with a real model (AI_CEO_LLM=anthropic). `done_kind` may list acceptable kinds.
+# contacts: how many contacts the mission has; notes: extra context lines the director sees.
+
+- {id: t01, request: "Draft a wholesale price list for our stockists", verdict: do_now, done_kind: file_ok}
+- {id: t02, request: "Publish the landing page we designed last week", notes: ["The landing page design is approved."], verdict: do_now, done_kind: url_ok}
+- {id: t03, request: "Email our wholesale leads about the new glaze collection", contacts: 0, verdict: do_after}
+- {id: t04, request: "Email our wholesale leads about the new glaze collection", contacts: 40, notes: ["An email draft for the glaze collection is approved."], verdict: do_now}
+- {id: t05, request: "Get our first wholesale order today", contacts: 0, verdict: object}
+- {id: t06, request: "Research craft fairs in the region for this spring", verdict: do_now, done_kind: sources_ok}
+- {id: t07, request: "Fix the broken checkout button on the shop", notes: ["The shop code is in a connected repository with CI."], verdict: do_now, done_kind: ci_green}
+- {id: t08, request: "Write product descriptions for all 40 items", verdict: do_now, done_kind: file_ok}
+- {id: t09, request: "Make our studio famous by next week", verdict: object}
+- {id: t10, request: "Send a sample box to the gallery that replied", contacts: 1, notes: ["Nobody on the team can ship physical parcels."], verdict: object}
+- {id: t11, request: "Prepare a one-page plan for the spring promotion", verdict: do_now, done_kind: file_ok}
+- {id: t12, request: "Compare three delivery partners for fragile items", verdict: do_now, done_kind: [file_ok, sources_ok]}
+- {id: t13, request: "Call the fair organisers and book us a booth", notes: ["The team cannot make phone calls."], verdict: object}
+- {id: t14, request: "Translate the FAQ into Spanish", notes: ["The FAQ page text exists."], verdict: do_now, done_kind: file_ok}
+- {id: t15, request: "Buy the domain we talked about", notes: ["The domain is already registered to the studio."], verdict: object}
+- {id: t16, request: "Post the new collection on the shop", notes: ["Product photos are not taken yet."], verdict: do_after}
+- {id: t17, request: "Write the newsletter for March and send it to subscribers", contacts: 0, verdict: do_after}
+- {id: t18, request: "Find out what competitors charge for handmade mugs", verdict: do_now, done_kind: [sources_ok, file_ok]}
+- {id: t19, request: "Double our revenue this month", verdict: object}
+- {id: t20, request: "Make the landing page load faster", notes: ["The site code is in a connected repository with CI."], verdict: do_now, done_kind: [ci_green, url_ok]}
+- {id: t21, request: "Draft a polite reply template for customers asking about delays", verdict: do_now, done_kind: file_ok}
+- {id: t22, request: "Set up a referral programme with discounts", notes: ["There is no price list yet."], verdict: do_after}
+- {id: t23, request: "Check that the shop page opens", verdict: do_now, done_kind: url_ok}
+- {id: t24, request: "Write a weekly sales report", notes: ["There have been no sales yet and no contacts."], verdict: object}
+- {id: t25, request: "Summarise last week's spend by task", notes: ["The spend log has entries for every task."], verdict: do_now, done_kind: file_ok}
+- {id: t26, request: "Build a list of 30 interior design shops that might stock us", verdict: do_now, done_kind: [file_ok, sources_ok]}
+- {id: t27, request: "Prepare the stockist contract for my review", verdict: do_now, done_kind: [file_ok, human_confirmed]}
+- {id: t28, request: "Write the about-us page in the founder's voice", notes: ["The founder has not described their story yet."], verdict: do_after}
+- {id: t29, request: "Collect customer reviews and publish them on the site", contacts: 0, notes: ["There are no customers yet."], verdict: object}
+- {id: t30, request: "Redo the research on fairs, but only indoor ones", notes: ["A fair research table already exists."], verdict: do_now, done_kind: [sources_ok, file_ok]}
+- {id: t31, request: "Plan a photo shoot schedule for the new collection", verdict: do_now, done_kind: file_ok}
+- {id: t32, request: "Launch paid ads tomorrow", notes: ["There is no ad budget agreed and no landing page yet."], verdict: [do_after, object]}
+- {id: t33, request: "Create a simple FAQ page on the site", notes: ["The site code is in a connected repository with CI."], verdict: do_now, done_kind: [ci_green, url_ok]}
+- {id: t34, request: "Write cold emails to 50 cafes", contacts: 0, verdict: do_after}
+- {id: t35, request: "Fix the typo on the homepage", notes: ["The site code is in a connected repository with CI."], verdict: do_now, done_kind: [ci_green, url_ok]}
+- {id: t36, request: "Estimate how many mugs we must sell to cover the fair booth", verdict: do_now, done_kind: file_ok}
+- {id: t37, request: "Hire a part-time assistant", notes: ["The team cannot hire people or sign contracts."], verdict: object}
+- {id: t38, request: "Prepare packaging copy for the gift boxes", verdict: do_now, done_kind: file_ok}
+- {id: t39, request: "Send the price list to every stockist", contacts: 0, notes: ["The price list is done."], verdict: do_after}
+- {id: t40, request: "Check whether our competitors' shops are online", verdict: do_now, done_kind: [url_ok, sources_ok, file_ok]}

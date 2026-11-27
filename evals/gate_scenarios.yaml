@@ -1,0 +1,114 @@
+# SYNTHETIC - hand-written. Each case: what the task was assigned to produce, what the
+# agent claims as proof, what the world really looks like, and the verdict the gate must give.
+# A "false done" (expected not_done/verifying, got done) is the failure that matters most.
+
+- id: url-live
+  kind: url_ok
+  world: {urls: {"https://shop.example.com": 200}}
+  claims: [{kind: url_ok, ref: "https://shop.example.com"}]
+  expect: {status: done}
+- id: url-5xx
+  kind: url_ok
+  world: {urls: {"https://shop.example.com": 503}}
+  claims: [{kind: url_ok, ref: "https://shop.example.com"}]
+  expect: {status: not_done, code: site_down}
+- id: url-never-published
+  kind: url_ok
+  world: {}
+  claims: [{kind: url_ok, ref: "https://shop.example.com"}]
+  expect: {status: not_done, code: site_unreachable}
+- id: url-redirect-is-not-2xx
+  kind: url_ok
+  world: {urls: {"https://shop.example.com": 302}}
+  claims: [{kind: url_ok, ref: "https://shop.example.com"}]
+  expect: {status: not_done, code: site_down}
+- id: file-complete
+  kind: file_ok
+  world: {files: {"price-list.md": "| Mug | 28 |\n| Bowl | 34 |\n"}}
+  claims: [{kind: file_ok, ref: "price-list.md"}]
+  expect: {status: done}
+- id: file-tbd
+  kind: file_ok
+  world: {files: {"price-list.md": "| Mug | TBD |\n"}}
+  claims: [{kind: file_ok, ref: "price-list.md"}]
+  expect: {status: not_done, code: placeholders}
+- id: file-bracket-placeholder
+  kind: file_ok
+  world: {files: {"letter.md": "Dear [insert stockist name], ..."}}
+  claims: [{kind: file_ok, ref: "letter.md"}]
+  expect: {status: not_done, code: placeholders}
+- id: file-template-variable
+  kind: file_ok
+  world: {files: {"offer.md": "Your discount: {{discount}}"}}
+  claims: [{kind: file_ok, ref: "offer.md"}]
+  expect: {status: not_done, code: placeholders}
+- id: file-lorem
+  kind: file_ok
+  world: {files: {"about.md": "Lorem ipsum dolor sit amet"}}
+  claims: [{kind: file_ok, ref: "about.md"}]
+  expect: {status: not_done, code: placeholders}
+- id: file-whitespace-only
+  kind: file_ok
+  world: {files: {"notes.md": "  \n\n "}}
+  claims: [{kind: file_ok, ref: "notes.md"}]
+  expect: {status: not_done, code: empty_file}
+- id: file-claimed-but-missing
+  kind: file_ok
+  world: {}
+  claims: [{kind: file_ok, ref: "report.md"}]
+  expect: {status: not_done, code: file_missing}
+- id: file-task-offers-a-link
+  kind: file_ok
+  world: {urls: {"https://www.example.org/article": 200}}
+  claims: [{kind: url_ok, ref: "https://www.example.org/article"}]
+  expect: {status: not_done, code: no_proof_claimed}
+- id: no-claims-at-all
+  kind: file_ok
+  world: {}
+  claims: []
+  expect: {status: not_done, code: no_proof_claimed}
+- id: ci-green
+  kind: ci_green
+  world: {ci: {"change-41": green}}
+  claims: [{kind: ci_green, ref: "change-41"}]
+  expect: {status: done}
+- id: ci-red
+  kind: ci_green
+  world: {ci: {"change-41": red}}
+  claims: [{kind: ci_green, ref: "change-41"}]
+  expect: {status: not_done, code: ci_red}
+- id: ci-running
+  kind: ci_green
+  world: {ci: {"change-41": running}}
+  claims: [{kind: ci_green, ref: "change-41"}]
+  expect: {status: verifying}
+- id: ci-only-main-is-green
+  kind: ci_green
+  world: {ci: {"main": green}}
+  claims: [{kind: ci_green, ref: "change-41"}]
+  expect: {status: not_done, code: no_pipeline}
+- id: sources-ok
+  kind: sources_ok
+  world: {urls: {"https://a.example": 200, "https://b.example": 200, "https://c.example": 404}}
+  claims: [{kind: sources_ok, ref: "https://a.example,https://b.example,https://c.example"}]
+  expect: {status: done}
+- id: sources-robots-block-is-alive
+  kind: sources_ok
+  world: {urls: {"https://a.example": 403, "https://b.example": 429, "https://c.example": 200}}
+  claims: [{kind: sources_ok, ref: "https://a.example,https://b.example,https://c.example"}]
+  expect: {status: done}
+- id: sources-mostly-dead
+  kind: sources_ok
+  world: {urls: {"https://a.example": 404, "https://b.example": 410, "https://c.example": 200}}
+  claims: [{kind: sources_ok, ref: "https://a.example,https://b.example,https://c.example"}]
+  expect: {status: not_done, code: dead_links}
+- id: sources-too-few
+  kind: sources_ok
+  world: {urls: {"https://a.example": 200, "https://b.example": 200}}
+  claims: [{kind: sources_ok, ref: "https://a.example,https://b.example"}]
+  expect: {status: not_done, code: too_few_sources}
+- id: human-needs-the-owner
+  kind: human_confirmed
+  world: {}
+  claims: [{kind: human_confirmed, ref: owner}]
+  expect: {status: verifying}

@@ -1,0 +1,30 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install (locked dependencies)
+        run: |
+          pip install -r requirements-dev.lock
+          pip install --no-deps -e .
+      - name: Lint
+        run: |
+          ruff check .
+          ruff format --check .
+      - name: Tests
+        run: pytest
+      - name: Demo runs
+        run: python -m aiceo.demo --quiet > /dev/null
+      - name: Eval results are up to date
+        run: |
+          python evals/run_evals.py --write > /dev/null
+          git diff --exit-code evals/RESULTS.md
